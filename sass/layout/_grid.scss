@@ -1,0 +1,68 @@
+.row {
+  // The difference between width and max-width means that if the viewport is smaller than the available space, then
+  // it will fill in 100% space. However, if we will specify width, then it will only fill in the width specified.
+  max-width: $grid-width;
+  margin: 0 auto;
+
+  @include respond(tab-port) {
+    max-width: 50rem;
+    padding: 0 3rem;
+  }
+
+  // The 'not' pseudo class applies the style to all the elements, except to element passed in as the argument.
+  &:not(:last-child) {
+    margin-bottom: $gutter-vertical;
+
+    @include respond(tab-port) {
+      margin-bottom: $gutter-vertical-small;
+    }
+  }
+
+  @include clearfix;
+
+  // In order to select elements, we can also use the attribute selector, as in the case below.
+  [class^="col-"] {
+    float: left;
+
+    &:not(:last-child) {
+      margin-right: $gutter-horizontal;
+
+      @include respond(tab-port) {
+        margin-right: 0;
+        margin-bottom: $gutter-vertical-small;
+      }
+    }
+
+    @include respond(tab-port) {
+      width: 100% !important;
+    }
+  }
+
+  // We can use calc functions to  calculate the values having different Units, so we won't have to convert them
+  // manually. Also, in order to use Sass variables inside calc function, we need to use the '#{sass_variable}' syntax.
+  // Take special care about calc function, it is 'white-space' sensitive. 
+  .col-1-of-2 {
+    width: calc((100% - #{$gutter-horizontal}) / 2);
+  }
+
+  .col-1-of-3 {
+    width: calc((100% - 2*#{$gutter-horizontal}) / 3);
+  }
+
+  .col-2-of-3 {
+    width: calc(2 * ((100% - 2*#{$gutter-horizontal}) / 3) + #{$gutter-horizontal});
+  }
+
+  .col-1-of-4 {
+    width: calc((100% - 3*#{$gutter-horizontal}) / 4);
+  }
+
+  .col-2-of-4 {
+    width: calc(2 * ((100% - 3*#{$gutter-horizontal}) / 4) + #{$gutter-horizontal});
+  }
+
+  .col-3-of-4 {
+    width: calc(3 * ((100% - 3*#{$gutter-horizontal}) / 4) + 2 * #{$gutter-horizontal});
+  }
+
+}
